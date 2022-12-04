@@ -1,0 +1,37 @@
+{
+  "name": "BaptistPortfolioBackend",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "index.js",
+  "author": "Aritra Bhattacharjee",
+  "license": "MIT",
+  "engines": {
+    "node": "16.x"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@fastify/auth": "^3.0.2",
+    "@fastify/cors": "^8.1.0",
+    "@fastify/static": "5.0.0",
+    "@fastify/swagger": "^7.4.1",
+    "axios": "^0.27.2",
+    "basic-ftp": "^4.6.6",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.10.7",
+    "dotenv": "^10.0.0",
+    "fastify": "^4",
+    "fluent-json-schema": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.4",
+    "nodemailer": "^6.7.2",
+    "razorpay": "^2.8.0",
+    "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "nodemon": "^2.0.15"
+  }
+}
