@@ -45,6 +45,7 @@ const getAuthorBlogs = async (request, reply) => {
 
 const getBlogs = async (request, reply) => {
   try {
+    const projection = { headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1}
     let blogs = [];
     const defaultLimit = 10;
     const defaultIndex = 0;
@@ -65,17 +66,19 @@ const getBlogs = async (request, reply) => {
       blogs = await Blog.find(query)
         .skip(index)
         .limit(limit)
-        .sort({ sequence: 1 });
+        .sort({ sequence: 1 })
+        .select(projection);
     } else if (searchQuery) {
       blogs = await Blog.find({ $text: { $search: searchQuery } }, {score: { "$meta": "textScore" }})
         .skip(index)
         .limit(limit)
-        .sort({ sequence: 1, score: { "$meta": "textScore" } });
+        .sort({ sequence: 1, score: { "$meta": "textScore" } })
+        .select(projection);
     } else {
-      blogs = await Blog.find({}).skip(index).limit(limit).sort({ sequence: 1 });
+      blogs = await Blog.find({}).skip(index).limit(limit).sort({ sequence: 1 }).select(projection);
     }
 
-    return blogs;
+    return reply.send(blogs)
   } catch (err) {
     reply.status(400).send({ error: "Some error occured" });
     return;
