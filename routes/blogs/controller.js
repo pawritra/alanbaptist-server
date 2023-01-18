@@ -45,9 +45,9 @@ const getAuthorBlogs = async (request, reply) => {
 
 const getBlogs = async (request, reply) => {
   try {
-    const projection = { headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1}
+    const projection = { title: 1, headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1}
     let blogs = [];
-    const defaultLimit = 10;
+    const defaultLimit = 6;
     const defaultIndex = 0;
 
     const limit = request.query.limit ? request.query.limit : defaultLimit;
