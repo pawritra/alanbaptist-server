@@ -15,7 +15,6 @@ const triggerMail = async (offer, user, date) => {
     },
   });
 
-  console.log("here")
   const emailTemplate = generateEmailTemplate(offer, user, date);
   var mailOptions = {
     from: '"Optimal Wellness" <info@alanvidyushbaptist.com>',
@@ -24,7 +23,7 @@ const triggerMail = async (offer, user, date) => {
     text: `Order Confirmation for ${offer.offer_name.split('_')[offer.offer_name.split('_').length - 1]}`,
     html: emailTemplate,
   };
-  console.log(offer, user, date)
+
   await transport.sendMail(mailOptions);
 };
 

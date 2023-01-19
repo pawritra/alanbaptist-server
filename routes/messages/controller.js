@@ -1,16 +1,17 @@
-const { Message } = require('../../models/message')
+const { Message } = require("../../models/message");
+const { triggerMail } = require("./utils");
 
 const getMessage = async (req, reply) => {
-  try{
-    const message = await Message.findOne({ _id: req.params.id })
+  try {
+    const message = await Message.findOne({ _id: req.params.id });
     return message;
-  } catch(err) {
-    reply.status(401).send({ error: err.message })
+  } catch (err) {
+    reply.status(401).send({ error: err.message });
   }
-}
+};
 
 const getMessages = async (req, reply) => {
-  try{
+  try {
     let messages = [];
     const defaultLimit = 10;
     const defaultIndex = 0;
@@ -20,46 +21,53 @@ const getMessages = async (req, reply) => {
     let startDate = req.query.startDate ? new Date(req.query.startDate) : null;
     let endDate = req.query.endDate ? new Date(req.query.endDate) : null;
 
-
-    console.log(startDate, endDate);
-    if(startDate && endDate){
-      messages = await Message.find({ createdAt: { $gte: startDate, $lte: endDate }}).skip(index).limit(limit)
-    } else if(startDate){
-      messages = await Message.find({ createdAt: { $gte: startDate }}).skip(index).limit(limit)
-    } else if(endDate){
-      messages = await Message.find({ createdAt: { $lte: endDate }}).skip(index).limit(limit)
+    if (startDate && endDate) {
+      messages = await Message.find({
+        createdAt: { $gte: startDate, $lte: endDate },
+      })
+        .skip(index)
+        .limit(limit);
+    } else if (startDate) {
+      messages = await Message.find({ createdAt: { $gte: startDate } })
+        .skip(index)
+        .limit(limit);
+    } else if (endDate) {
+      messages = await Message.find({ createdAt: { $lte: endDate } })
+        .skip(index)
+        .limit(limit);
     } else {
-      messages = await Message.find().skip(index).limit(limit)
+      messages = await Message.find().skip(index).limit(limit);
     }
 
-    return messages
-  } catch(err) {
-    reply.status(401).send({ error: err.message })
+    return messages;
+  } catch (err) {
+    reply.status(401).send({ error: err.message });
   }
-}
+};
 
 const createMessage = async (req, reply) => {
-  try{
-    const message = new Message({ ...req.body })
+  try {
+    const message = new Message({ ...req.body });
     await message.save();
-    return { message: "Message Created!"}
-  } catch(err) {
-    reply.status(401).send({ error: err.message })
+    //triggerMail(message);
+    return { message: "Message Created!" };
+  } catch (err) {
+    reply.status(401).send({ error: err.message });
   }
-}
+};
 
 const deleteMessage = async (req, reply) => {
-  try{
+  try {
     await Message.findByIdAndDelete(req.params.id);
-    return { message: "Message Deleted"}
-  } catch(err) {
+    return { message: "Message Deleted" };
+  } catch (err) {
     reply.status(400).send({ error: "Some error occured." });
   }
-}
+};
 
 module.exports = {
   getMessage,
   getMessages,
   createMessage,
   deleteMessage,
-}
+};

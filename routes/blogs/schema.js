@@ -59,7 +59,8 @@ const getBlogsSchema = {
     .prop("searchQuery", S.string())
     .prop("category", S.string())
     .prop("coach", S.string())
-    .prop("subcategory", S.string()), // (or) query: queryStringJsonSchema
+    .prop("subcategory", S.string())
+    .prop("minimal", S.boolean()), 
 };
 
 const getAuthorSchema = {
