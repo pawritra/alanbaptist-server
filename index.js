@@ -44,7 +44,7 @@ const start = async () => {
     fastify.register(addProgramReachRoutes, { prefix: "/api/v1/program_reaches" });
 
     fastify.listen({ port: process.env.PORT, host: "0.0.0.0" });
-    //fastify.listen({ port: '8081', host: "localhost" });
+    // fastify.listen({ port: '8081', host: "localhost" });
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

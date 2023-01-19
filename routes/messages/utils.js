@@ -6,7 +6,7 @@ const triggerMail = async (message) => {
     port: 465,
     secure: true, // use TLS
     auth: {
-      user: "info@alanbaptist.com",
+      user: "no-reply@optimumwellness.in",
       pass: "@Asd1234",
     },
     tls: {
@@ -16,10 +16,10 @@ const triggerMail = async (message) => {
 
   const emailTemplate = generateEmailTemplate(message);
   var mailOptions = {
-    from: '"Optimal Wellness" <info@alanvidyushbaptist.com>',
-    to: 'whoisaritra@gmail.com',
-    subject: `Message Notification`,
-    text: `Mesasge Notification`,
+    from: '"Optimal Wellness" <no-reply@optimumwellness.in>',
+    to: 'alan.optimumwellness@gmail.com,alanvidyushbaptist1995@gmail.com',
+    subject: `Message Notification from Optimum Wellness`,
+    text: `${message.name} sent you a message through Optimum Wellness`,
     html: emailTemplate,
   };
 
@@ -39,8 +39,8 @@ const generateEmailTemplate = (message) => {
             <li><b>Name</b> ${message.name}</li>
             <li><b>Email</b> ${message.email}</li>
             <li><b>Phone</b> ${message.phone}</li>
-            <li><b>Message</b></li>
           </ul>
+            <h3><b>Message</b></h3>
             <p>${message.message}</p>
          </body>
       </html>

@@ -49,7 +49,7 @@ const createMessage = async (req, reply) => {
   try {
     const message = new Message({ ...req.body });
     await message.save();
-    //triggerMail(message);
+    triggerMail(message);
     return { message: "Message Created!" };
   } catch (err) {
     reply.status(401).send({ error: err.message });
