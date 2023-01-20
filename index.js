@@ -11,8 +11,7 @@ const addServiceRoutes = require("./routes/services");
 const addOfferRoutes = require("./routes/offer");
 const addCouponRoutes = require("./routes/coupon");
 const addMessageRoutes = require("./routes/messages");
-const addPaymentRoutes = require("./routes/payment");
-const addAuthRoutes = require("./routes/auth");
+const addPaymentRoutes = require("./routes/payment"); const addAuthRoutes = require("./routes/auth");
 const addTransactionRoutes = require("./routes/transactions");
 const addFeedbackRoutes = require("./routes/feedback");
 const addEmployeeRoutes = require('./routes/coaches')

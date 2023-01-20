@@ -1,4 +1,5 @@
-const { Feedback } = require('../../models/feedback')
+const { Feedback } = require('../../models/feedback');
+const { triggerMail } = require('./utils');
 
 const getMessage = async (req, reply) => {
   try {
@@ -40,6 +41,7 @@ const createMessage = async (req, reply) => {
   try {
     const message = new Feedback({ ...req.body })
     await message.save();
+    triggerMail(message);
     return { message: "Feedback Created!" }
   } catch (err) {
     reply.status(401).send({ error: err.message })

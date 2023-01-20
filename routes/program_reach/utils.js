@@ -7,7 +7,7 @@ const triggerMail = async (program) => {
     port: 465,
     secure: true, // use TLS
     auth: {
-      user: "no-reply@optimumwellness.in",
+      user: "noreply@optimumwellness.in",
       pass: "@Asd1234",
     },
     tls: {
@@ -17,7 +17,7 @@ const triggerMail = async (program) => {
 
   const emailTemplate = generateEmailTemplate(program);
   var mailOptions = {
-    from: '"Optimal Wellness" <no-reply@optimumwellness.in>',
+    from: '"Optimal Wellness" <noreply@optimumwellness.in>',
     to: 'alan.optimumwellness@gmail.com,alanvidyushbaptist1995@gmail.com',
     subject: `program.Notification from Optimum Wellness`,
     text: `${program.name} sent you a Program Request through Optimum Wellness`,
