@@ -50,7 +50,7 @@ const getBlogs = async (request, reply) => {
     let blogs = [];
     const defaultLimit = 6;
     const defaultIndex = 0;
-    const isStory = request.query.isStory && request.query.minimal === true;
+    const isStory = request.query.isStory && request.query.isStory === true;
 
     const limit = request.query.limit ? request.query.limit : defaultLimit;
     let index = request.query.index ? request.query.index : defaultIndex;
@@ -58,9 +58,9 @@ const getBlogs = async (request, reply) => {
     const subcategory = request.query.subcategory;
     const coach = request.query.coach;
     const searchQuery = request.query.searchQuery;
+    const query = {};
 
     if (category != null || subcategory != null || coach != null) {
-      const query = {};
       if(isStory) query['transformation_story'] = true;
       if(category) query['category'] = category;
       if(subcategory) query['subcategory'] = subcategory;
@@ -83,7 +83,8 @@ const getBlogs = async (request, reply) => {
 
     return reply.send(blogs)
   } catch (err) {
-    reply.status(400).send({ error: "Some error occured" });
+    console.log(err);
+    reply.status(400).send({ error: 'Some error occured'});
     return;
   }
 };
