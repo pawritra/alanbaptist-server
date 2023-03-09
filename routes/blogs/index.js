@@ -2,7 +2,6 @@ const BlogSchema = require("./schema");
 const {
   updateBlog,
   getBlogs,
-  getTransformationStories,
   getOneBlog,
   deleteBlog,
   swapBlogSequence,
