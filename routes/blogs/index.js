@@ -16,7 +16,6 @@ const {
 const schema = require('./schema')
 
 module.exports = (fastify, _, done) => {
-  fastify.get("/transformation_stories", { schema: BlogSchema.getBlogsSchema }, getTransformationStories );
   fastify.get("/featured", { schema: BlogSchema.getFeaturedBlogsSchema }, getFeaturedBlogs);
   fastify.get("/:slug", { schema: BlogSchema.getBlogSchema }, getOneBlog);
   fastify.get("/author/:author", { schema: BlogSchema.getAuthorSchema }, getAuthorBlogs);

@@ -45,12 +45,12 @@ const getAuthorBlogs = async (request, reply) => {
 
 const getBlogs = async (request, reply) => {
   try {
-    console.log(request.query);
     const minimal = request.query.minimal && request.query.minimal === true;
     const projection = minimal ? { title: 1, headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1} : {}
     let blogs = [];
     const defaultLimit = 6;
     const defaultIndex = 0;
+    const isStory = request.query.isStory && request.query.minimal === true;
 
     const limit = request.query.limit ? request.query.limit : defaultLimit;
     let index = request.query.index ? request.query.index : defaultIndex;
@@ -61,6 +61,7 @@ const getBlogs = async (request, reply) => {
 
     if (category != null || subcategory != null || coach != null) {
       const query = {};
+      if(isStory) query['transformation_story'] = true;
       if(category) query['category'] = category;
       if(subcategory) query['subcategory'] = subcategory;
       if(coach) query['coach'] = {$elemMatch: {"name": coach }};
@@ -77,53 +78,10 @@ const getBlogs = async (request, reply) => {
         .sort({ sequence: 1, score: { "$meta": "textScore" } })
         .select(projection);
     } else {
-      blogs = await Blog.find({}).skip(index).limit(limit).sort({ sequence: 1 }).select(projection);
+      blogs = await Blog.find(query).skip(index).limit(limit).sort({ sequence: 1 }).select(projection);
     }
 
     return reply.send(blogs)
-  } catch (err) {
-    reply.status(400).send({ error: "Some error occured" });
-    return;
-  }
-};
-
-const getTransformationStories = async (request, reply) => {
-  try {
-    let blogs = [];
-    const defaultLimit = 10;
-    const defaultIndex = 0;
-    const minimal = request.query.minimal && request.query.minimal == 'true';
-    const projection = minimal ? { title: 1, headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1} : {}
-
-    const limit = request.query.limit ? request.query.limit : defaultLimit;
-    let index = request.query.index ? request.query.index : defaultIndex;
-    const category = request.query.category;
-    const subcategory = request.query.subcategory;
-    const coach = request.query.coach;
-    const searchQuery = request.query.searchQuery;
-
-    if (category != null || subcategory != null || coach != null) {
-      const query = {
-        transformation_story: true,
-      };
-      if(category) query['category'] = category;
-      if(subcategory) query['subcategory'] = subcategory;
-      if(coach) query['coach'] = {$elemMatch: {"name": coach }};
-
-      blogs = await Blog.find(query)
-        .skip(index)
-        .limit(limit)
-        .sort({ sequence: 1 }).project(projection);
-    } else if (searchQuery) {
-      blogs = await Blog.find({ $text: { $search: searchQuery }, transformation_story: true }, {score: { "$meta": "textScore" }})
-        .skip(index)
-        .limit(limit)
-        .sort({ sequence: 1, score: { "$meta": "textScore" } }).project(projection);
-    } else {
-      blogs = await Blog.find({ transformation_story: true }).skip(index).limit(limit).sort({ sequence: 1 }).project(projection);
-    }
-
-    return blogs;
   } catch (err) {
     reply.status(400).send({ error: "Some error occured" });
     return;

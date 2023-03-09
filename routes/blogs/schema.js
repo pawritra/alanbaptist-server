@@ -60,7 +60,8 @@ const getBlogsSchema = {
     .prop("category", S.string())
     .prop("coach", S.string())
     .prop("subcategory", S.string())
-    .prop("minimal", S.boolean()), 
+    .prop("minimal", S.boolean())
+    .prop("isStory", S.boolean()),
 };
 
 const getAuthorSchema = {
