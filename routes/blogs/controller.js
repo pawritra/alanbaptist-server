@@ -242,7 +242,6 @@ const removeFeaturedBlogHandler = async (request, reply) => {
 
 module.exports = {
   updateBlog,
-  getTransformationStories,
   getBlogs,
   getOneBlog,
   deleteBlog,
