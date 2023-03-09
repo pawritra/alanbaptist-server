@@ -12,8 +12,8 @@ const withSwagger = (fastify) => {
         description: "Find more info here",
       },
       // host: "localhost:8081",
-      host: "desolate-retreat-74146.herokuapp.com/",
-      schemes: ["http", "https"],
+      host: "itchy-blue-seagull.cyclic.app/",
+      schemes: ["https", "http"],
       securityDefinitions: {
         apiKey: {
           type: "apiKey",

@@ -16,8 +16,7 @@ const {
 const schema = require('./schema')
 
 module.exports = (fastify, _, done) => {
-  fastify.get("/", { schema: BlogSchema.getBlogsSchema }, getBlogs);
-  fastify.get("/tranformation_stories", { schema: BlogSchema.getBlogsSchema }, getTransformationStories );
+  fastify.get("/transformation_stories", { schema: BlogSchema.getBlogsSchema }, getTransformationStories );
   fastify.get("/featured", { schema: BlogSchema.getFeaturedBlogsSchema }, getFeaturedBlogs);
   fastify.get("/:slug", { schema: BlogSchema.getBlogSchema }, getOneBlog);
   fastify.get("/author/:author", { schema: BlogSchema.getAuthorSchema }, getAuthorBlogs);
@@ -28,5 +27,7 @@ module.exports = (fastify, _, done) => {
   fastify.patch("/swapBlogs", { schema: BlogSchema.swapBlogSequence, preHandler: fastify.auth([fastify.verify]) }, swapBlogSequence)
   fastify.patch("/featuredBlog/:id", { schema: schema.featuredBlogSchema, preHandler: fastify.auth([fastify.verify]) }, addFeaturedBlogHandler);
   fastify.delete("/featuredBlog/:id", { schema: schema.featuredBlogSchema, preHandler: fastify.auth([fastify.verify]) }, removeFeaturedBlogHandler);
+
+  fastify.get("/", { schema: BlogSchema.getBlogsSchema }, getBlogs);
   done();
 };
