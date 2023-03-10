@@ -51,6 +51,7 @@ const getBlogs = async (request, reply) => {
     const defaultLimit = 6;
     const defaultIndex = 0;
     const isStory = request.query.isStory && request.query.isStory === true;
+    if(minimal && isStory) projection['transformation_image'] = 1;
 
     const limit = request.query.limit ? request.query.limit : defaultLimit;
     let index = request.query.index ? request.query.index : defaultIndex;
