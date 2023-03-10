@@ -46,11 +46,12 @@ const getAuthorBlogs = async (request, reply) => {
 const getBlogs = async (request, reply) => {
   try {
     const minimal = request.query.minimal && request.query.minimal === true;
-    const projection = minimal ? { title: 1, headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1} : {}
+    const projection = minimal ? { transformation_story: 1, title: 1, headerImage: { "$first": ["$headerImage"]}, summary: 1, slug: 1, category: 1} : {}
     let blogs = [];
     const defaultLimit = 6;
     const defaultIndex = 0;
-    const isStory = request.query.isStory && request.query.isStory === true;
+
+    const isStory = request.query.isStory && request.query.isStory == true;
     if(minimal && isStory) projection['transformation_image'] = 1;
 
     const limit = request.query.limit ? request.query.limit : defaultLimit;
@@ -59,10 +60,11 @@ const getBlogs = async (request, reply) => {
     const subcategory = request.query.subcategory;
     const coach = request.query.coach;
     const searchQuery = request.query.searchQuery;
+
     const query = {};
+    if(isStory) query['transformation_story'] = true;
 
     if (category != null || subcategory != null || coach != null) {
-      if(isStory) query['transformation_story'] = true;
       if(category) query['category'] = category;
       if(subcategory) query['subcategory'] = subcategory;
       if(coach) query['coach'] = {$elemMatch: {"name": coach }};
